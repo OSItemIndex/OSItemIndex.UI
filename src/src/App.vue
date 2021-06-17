@@ -2,26 +2,23 @@
   <v-app>
     <AppBar />
     <v-main>
-      <HelloWorld />
+      <IndexTable />
     </v-main>
   </v-app>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
-import AppBar from "./components/AppBar.vue";
-import HelloWorld from "./components/HelloWorld.vue";
+import Component from "vue-class-component";
 
-export default Vue.extend({
-  name: "App",
+import AppBar from "./components/app-bar/AppBar.vue";
+import IndexTable from "./components/content/IndexTable.vue";
 
+@Component({
   components: {
     AppBar,
-    HelloWorld,
+    IndexTable,
   },
-
-  data: () => ({
-    //
-  }),
-});
+})
+export default class App extends Vue {}
 </script>
