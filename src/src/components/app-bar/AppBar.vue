@@ -1,26 +1,20 @@
 <template>
   <v-app-bar app>
-    <Title />
+    <template v-if="$vuetify.breakpoint.mdAndUp">
+      <AppTitle />
+      <v-spacer />
+    </template>
+
+    <AppSearch />
+
     <v-spacer />
-    <Search />
-    <v-spacer />
-    <Tooltips />
+
+    <AppTooltips />
   </v-app-bar>
 </template>
 
 <script>
-import Vue from "vue";
-
-import Title from "./Title.vue";
-import Search from "./Search.vue";
-import Tooltips from "./Tooltips.vue";
-
-export default Vue.extend({
+export default {
   name: "AppBar",
-  components: {
-    Title,
-    Search,
-    Tooltips,
-  },
-});
+};
 </script>
