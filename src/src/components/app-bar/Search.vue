@@ -4,13 +4,13 @@
     placeholder="Item name or ID"
     v-model="indexSearchString"
     :label="label"
+    :autofocus="!$vuetify.breakpoint.mobile"
     prepend-inner-icon="mdi-magnify"
     dense
     solo
     hide-details
     outlined
     clearable
-    autofocus
   >
   </v-text-field>
 </template>
