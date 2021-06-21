@@ -23,18 +23,18 @@ import { Ref } from "vue-property-decorator";
 const IN_BROWSER = typeof window !== "undefined";
 
 @Component
-export default class AppSearch extends Vue {
+export default class Search extends Vue {
   @Ref() readonly searchInput!: HTMLInputElement;
   static readonly searchKey = "/";
   static readonly blurKey = "Escape";
   static readonly baseLabel = "Search the index..";
-  searchLabel = AppSearch.baseLabel;
+  searchLabel = Search.baseLabel;
   indexSearchString = "";
 
   get label(): string {
     if (!this.$vuetify.breakpoint.mobile)
       this.searchLabel =
-        AppSearch.baseLabel + " " + "[press " + AppSearch.searchKey + "]";
+        Search.baseLabel + " " + "[press " + Search.searchKey + "]";
     return this.searchLabel;
   }
 
@@ -58,7 +58,7 @@ export default class AppSearch extends Vue {
       event.target === (this.searchInput as unknown as Vue).$refs.input;
 
     switch (event.key) {
-      case AppSearch.searchKey: {
+      case Search.searchKey: {
         if (!inSearch) {
           this.searchInput.focus();
           event.preventDefault();
@@ -66,7 +66,7 @@ export default class AppSearch extends Vue {
         break;
       }
 
-      case AppSearch.blurKey: {
+      case Search.blurKey: {
         if (inSearch) {
           this.resetSearch();
           event.preventDefault();

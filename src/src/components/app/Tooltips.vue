@@ -35,6 +35,6 @@
 
 <script>
 export default {
-  name: "AppTooltips",
+  name: "Tooltips",
 };
 </script>

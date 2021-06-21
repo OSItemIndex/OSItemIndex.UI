@@ -1,15 +1,12 @@
 <template>
   <v-app-bar app>
     <template v-if="$vuetify.breakpoint.mdAndUp">
-      <AppTitle />
+      <Title />
       <v-spacer />
     </template>
-
-    <AppSearch />
-
+    <Search />
     <v-spacer />
-
-    <AppTooltips />
+    <Tooltips />
   </v-app-bar>
 </template>
 
