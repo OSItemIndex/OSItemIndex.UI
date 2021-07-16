@@ -10,20 +10,14 @@
         "tags": [
           "Items"
         ],
-        "summary": "Returns a array of all items in the current database, with optional query filtering",
+        "summary": "GET all items in the database",
+        "operationId": "GetItemsQuery",
         "parameters": [
           {
             "name": "Name",
             "in": "query",
             "schema": {
               "type": "string"
-            }
-          },
-          {
-            "name": "LooseCompare",
-            "in": "query",
-            "schema": {
-              "type": "boolean"
             }
           },
           {
@@ -64,7 +58,76 @@
         ],
         "responses": {
           "200": {
-            "description": "Success",
+            "description": "Retrieved an array of all item information from the database",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/OsrsBoxItem"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/items/simple": {
+      "get": {
+        "tags": [
+          "Items"
+        ],
+        "summary": "GET all items in the database but only include simple fields",
+        "description": "test",
+        "operationId": "GetItemsSimpleQuery",
+        "parameters": [
+          {
+            "name": "Name",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Duplicate",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "Noted",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "Placeholder",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "Stackable",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "TradeableOnGe",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Retrieved an array of simplified item information from the database",
             "content": {
               "application/json": {
                 "schema": {
@@ -84,14 +147,16 @@
         "tags": [
           "Items"
         ],
-        "summary": "Returns an item matching the specified Item ID",
+        "summary": "GET an item by an Item ID",
+        "operationId": "GetItemById",
         "parameters": [
           {
             "name": "id",
             "in": "path",
-            "description": "Item ID",
             "required": true,
             "schema": {
+              "maximum": 2147483647,
+              "minimum": 0,
               "type": "integer",
               "format": "int32"
             }
@@ -99,7 +164,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success",
+            "description": "Retrieved a specific item by ID",
             "content": {
               "application/json": {
                 "schema": {
@@ -114,11 +179,30 @@
     "/version": {
       "get": {
         "tags": [
-          "Items"
+          "Version"
         ],
+        "summary": "Retrieve the internal versioning information of the database",
+        "operationId": "GetVersion",
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "Retrieved latest version in the database",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/VersionInfo"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VersionInfo"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VersionInfo"
+                }
+              }
+            }
           }
         }
       }
@@ -176,6 +260,10 @@
             "nullable": true
           }
         },
+        "additionalProperties": false
+      },
+      "VersionInfo": {
+        "type": "object",
         "additionalProperties": false
       }
     }

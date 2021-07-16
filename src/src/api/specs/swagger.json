@@ -10,7 +10,8 @@
         "tags": [
           "Items"
         ],
-        "summary": "Returns a array of all items in the current database, with optional query filtering",
+        "summary": "GET all items in the database",
+        "operationId": "GetItemsQuery",
         "produces": [
           "application/json"
         ],
@@ -19,11 +20,6 @@
             "in": "query",
             "name": "Name",
             "type": "string"
-          },
-          {
-            "in": "query",
-            "name": "LooseCompare",
-            "type": "boolean"
           },
           {
             "in": "query",
@@ -53,7 +49,63 @@
         ],
         "responses": {
           "200": {
-            "description": "Success",
+            "description": "Retrieved an array of all item information from the database",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/OsrsBoxItem"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/items/simple": {
+      "get": {
+        "tags": [
+          "Items"
+        ],
+        "summary": "GET all items in the database but only include simple fields",
+        "description": "test",
+        "operationId": "GetItemsSimpleQuery",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "Name",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "Duplicate",
+            "type": "boolean"
+          },
+          {
+            "in": "query",
+            "name": "Noted",
+            "type": "boolean"
+          },
+          {
+            "in": "query",
+            "name": "Placeholder",
+            "type": "boolean"
+          },
+          {
+            "in": "query",
+            "name": "Stackable",
+            "type": "boolean"
+          },
+          {
+            "in": "query",
+            "name": "TradeableOnGe",
+            "type": "boolean"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Retrieved an array of simplified item information from the database",
             "schema": {
               "type": "array",
               "items": {
@@ -69,7 +121,8 @@
         "tags": [
           "Items"
         ],
-        "summary": "Returns an item matching the specified Item ID",
+        "summary": "GET an item by an Item ID",
+        "operationId": "GetItemById",
         "produces": [
           "application/json"
         ],
@@ -77,15 +130,16 @@
           {
             "in": "path",
             "name": "id",
-            "description": "Item ID",
             "required": true,
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "maximum": 2147483647,
+            "minimum": 0
           }
         ],
         "responses": {
           "200": {
-            "description": "Success",
+            "description": "Retrieved a specific item by ID",
             "schema": {
               "$ref": "#/definitions/OsrsBoxItem"
             }
@@ -96,11 +150,21 @@
     "/version": {
       "get": {
         "tags": [
-          "Items"
+          "Version"
+        ],
+        "summary": "Retrieve the internal versioning information of the database",
+        "operationId": "GetVersion",
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "Retrieved latest version in the database",
+            "schema": {
+              "$ref": "#/definitions/VersionInfo"
+            }
           }
         }
       }
@@ -149,6 +213,9 @@
           "type": "string"
         }
       }
+    },
+    "VersionInfo": {
+      "type": "object"
     }
   }
 }

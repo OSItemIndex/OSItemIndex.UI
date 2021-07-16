@@ -4,7 +4,6 @@
     placeholder="Item name or ID"
     v-model="indexSearchString"
     :label="label"
-    :autofocus="!$vuetify.breakpoint.mobile"
     prepend-inner-icon="mdi-magnify"
     dense
     solo
@@ -39,6 +38,7 @@ export default class Search extends Vue {
   }
 
   mounted(): void {
+    if (!this.$vuetify.breakpoint.mobile) this.searchInput.focus();
     if (!IN_BROWSER) return;
     document.addEventListener("keydown", this.onDocumentKeydown);
   }
