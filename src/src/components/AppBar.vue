@@ -3,10 +3,14 @@
     <template v-if="$vuetify.breakpoint.mdAndUp">
       <Title />
       <v-spacer />
+      <Search />
+      <v-spacer />
+      <Tooltips />
     </template>
-    <Search />
-    <v-spacer />
-    <Tooltips />
+    <template v-else>
+      <Search />
+      <Tooltips />
+    </template>
   </v-app-bar>
 </template>
 

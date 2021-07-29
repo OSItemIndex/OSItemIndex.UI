@@ -1,9 +1,7 @@
 <template>
   <v-app>
     <AppBar />
-    <v-main>
-      <IndexTable />
-    </v-main>
+    <Content />
   </v-app>
 </template>
 

@@ -2,6 +2,8 @@
 const transformer = require("ts-reflection/transformer").default;
 
 module.exports = {
+  transpileDependencies: ["vuex-persist"],
+
   chainWebpack: (config) => {
     const getCustomTransformers = (program) => ({
       before: [transformer(program)],

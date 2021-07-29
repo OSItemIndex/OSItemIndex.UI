@@ -2,24 +2,18 @@ import Dexie, { Table } from "dexie";
 import { propertiesOf } from "ts-reflection";
 import { ItemsService, OsrsBoxItem } from "./api";
 
-const dbName = "OsrsboxItemsDb";
+const dbName = "OsItemIndexDb";
 
-export class OsrsboxItemsDb extends Dexie {
+export class OsItemIndexDb extends Dexie {
   items!: Table<OsrsBoxItem, number>;
-  private _schema!: string;
+  private static _db: OsItemIndexDb | null = null;
+
   constructor() {
     super(dbName);
-
-    const interfaceProps = propertiesOf<OsrsBoxItem>();
-    this._schema = interfaceProps.join(",");
   }
 
-  getFreshSchema(): string {
-    return this._schema;
-  }
-
-  async sync(): Promise<Dexie> {
-    const freshSchema = this.getFreshSchema();
+  private async sync(): Promise<Dexie> {
+    const freshSchema = OsItemIndexDb.getDbSchema();
 
     if (!(await Dexie.exists(dbName))) {
       // No Db, define it, no need to sync
@@ -35,9 +29,7 @@ export class OsrsboxItemsDb extends Dexie {
     const dbVerno = this.verno;
     const dbSchemaSet = this.tables.reduce(
       (_result, { schema }) =>
-        new Set<string>(schema.indexes.map((idx) => idx.src)).add(
-          schema.primKey.src
-        ),
+        new Set<string>(schema.indexes.map((idx) => idx.src)).add(schema.primKey.src),
       {}
     ) as Set<string>;
 
@@ -59,9 +51,30 @@ export class OsrsboxItemsDb extends Dexie {
     return await this.open();
   }
 
-  async seed() {
+  private static getDbSchema(): string {
+    const interfaceProps = propertiesOf<OsrsBoxItem>();
+    return interfaceProps.join(",");
+  }
+
+  static async getDb(): Promise<OsItemIndexDb> {
+    if (this._db !== null && this._db.isOpen) {
+      return this._db;
+    }
+
+    this._db = new OsItemIndexDb();
+
+    await this._db.sync();
+    return this._db;
+  }
+
+  static async getItems(): Promise<Table<OsrsBoxItem, number>> {
+    const db = await this.getDb();
+    return db.items;
+  }
+
+  private async seed() {
     await this.items.clear();
-    await this.items.bulkPut(await ItemsService.getItemsSimpleQuery());
+    await this.items.bulkPut(await ItemsService.getItemsSimple());
   }
 }
 

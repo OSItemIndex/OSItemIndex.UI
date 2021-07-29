@@ -7,17 +7,16 @@ import { request as __request } from '../core/request';
 export class ItemsService {
 
     /**
-     * GET all items in the database
      * @param name 
      * @param duplicate 
      * @param noted 
      * @param placeholder 
      * @param stackable 
      * @param tradeableOnGe 
-     * @returns OsrsBoxItem Retrieved an array of all item information from the database
+     * @returns OsrsBoxItem Success
      * @throws ApiError
      */
-    public static async getItemsQuery(
+    public static async getItems(
 name?: string,
 duplicate?: boolean,
 noted?: boolean,
@@ -41,18 +40,16 @@ tradeableOnGe?: boolean,
     }
 
     /**
-     * GET all items in the database but only include simple fields
-     * test
      * @param name 
      * @param duplicate 
      * @param noted 
      * @param placeholder 
      * @param stackable 
      * @param tradeableOnGe 
-     * @returns OsrsBoxItem Retrieved an array of simplified item information from the database
+     * @returns OsrsBoxItem Success
      * @throws ApiError
      */
-    public static async getItemsSimpleQuery(
+    public static async getItemsSimple(
 name?: string,
 duplicate?: boolean,
 noted?: boolean,
@@ -76,9 +73,8 @@ tradeableOnGe?: boolean,
     }
 
     /**
-     * GET an item by an Item ID
      * @param id 
-     * @returns OsrsBoxItem Retrieved a specific item by ID
+     * @returns OsrsBoxItem Success
      * @throws ApiError
      */
     public static async getItemById(

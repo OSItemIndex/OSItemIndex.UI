@@ -1,18 +1,41 @@
 <template>
-  <h1 />
+  <v-data-table
+    v-model="selected"
+    fixed-header
+    hide-default-footer
+    :headers="headers"
+    :items="desserts"
+    :single-select="true"
+    item-key="name"
+    class="elevation-1"
+  >
+    <template v-slot:top="{ pagination, options, updateOptions }">
+      <v-data-footer
+        disable-items-per-page
+        :pagination="pagination"
+        :options="options"
+        @update:options="updateOptions"
+        items-per-page-text="$vuetify.dataTable.itemsPerPageText"
+      />
+    </template>
+  </v-data-table>
 </template>
 
 <script lang="ts">
-// v-text="test"
-// import Vue from "vue";
-// import Component from "vue-class-component";
-// import { Api, OsrsBoxItem } from "@/api/ositemindex.api";
+import Vue from "vue";
+import { OsItemIndexDb } from "@/api/db";
+import Component from "vue-class-component";
 
-// @Component({})
-// export default class IndexTable extends Vue {
-//   created(): void {
-//     return;
-//   }
-// }
-//
+// Define the component in class-style
+@Component
+export default class IndexTable extends Vue {
+  private _db: OsItemIndexDb | null = null;
+  ready = false;
+
+  async created(): Promise<void> {
+    this._db = OsItemIndexDb.getDb();
+    await this._db.sync();
+    await this._db.seed();
+  }
+}
 </script>

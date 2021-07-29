@@ -2,5 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type VersionInfo = {
+export enum EventType {
+    SEED = 'seed',
+    UPDATE = 'update',
 }
