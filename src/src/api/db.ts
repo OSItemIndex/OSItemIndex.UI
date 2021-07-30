@@ -1,8 +1,8 @@
-import Dexie, { Table } from "dexie";
-import { propertiesOf } from "ts-reflection";
-import { ItemsService, OsrsBoxItem } from "./api";
+import Dexie, { Table } from 'dexie';
+import { propertiesOf } from 'ts-reflection';
+import { ItemsService, OsrsBoxItem } from '.';
 
-const dbName = "OsItemIndexDb";
+const dbName = 'OsItemIndexDb';
 
 export class OsItemIndexDb extends Dexie {
   items!: Table<OsrsBoxItem, number>;
@@ -28,19 +28,18 @@ export class OsItemIndexDb extends Dexie {
 
     const dbVerno = this.verno;
     const dbSchemaSet = this.tables.reduce(
-      (_result, { schema }) =>
-        new Set<string>(schema.indexes.map((idx) => idx.src)).add(schema.primKey.src),
-      {}
+      (_result, { schema }) => new Set<string>(schema.indexes.map((idx) => idx.src)).add(schema.primKey.src),
+      {},
     ) as Set<string>;
 
     this.close(); // close so we can operate if needed
-    this.on("blocked", () => false); // Silence console warning of blocked event.
+    this.on('blocked', () => false); // Silence console warning of blocked event.
 
     // If the schema is different, delete the database and increase the version.
     // No reason to migrate/upgrade, since we're storing all new data regardless
     // TODO: This only compares two strings (the prop names of our interface as a full string, and the dexie schema)
 
-    const currentSchemaSet = new Set(freshSchema.split(","));
+    const currentSchemaSet = new Set(freshSchema.split(','));
     if (!setsEqual(dbSchemaSet, currentSchemaSet)) {
       this.delete();
       this.version(dbVerno + 1).stores({ items: freshSchema });
@@ -53,7 +52,7 @@ export class OsItemIndexDb extends Dexie {
 
   private static getDbSchema(): string {
     const interfaceProps = propertiesOf<OsrsBoxItem>();
-    return interfaceProps.join(",");
+    return interfaceProps.join(',');
   }
 
   static async getDb(): Promise<OsItemIndexDb> {
