@@ -1,0 +1,13 @@
+FROM node:14.17.4-alpine
+
+WORKDIR /app
+
+ENV PATH /app/node_modules/.bin:$PATH
+
+COPY src/package.json ./
+COPY src/yarn.lock ./
+RUN yarn install --silent
+
+COPY ./src/ ./
+
+CMD ["yarn", "start"]
