@@ -1,16 +1,14 @@
 import * as React from 'react';
-import Container from '@material-ui/core/Container';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
+import { Header } from 'src/components/header';
+import { Grid } from '@material-ui/core';
 
 export default function App(): JSX.Element {
   return (
-    <Container maxWidth="sm">
-      <Box sx={{ my: 4 }}>
-        <Typography variant="h4" component="h1" gutterBottom>
-          Create React App v5-beta example with TypeScript
-        </Typography>
-      </Box>
-    </Container>
+    <Grid container spacing={2}>
+      <Grid item xs={12}>
+        <Header />
+      </Grid>
+      <Grid item xs={12}></Grid>
+    </Grid>
   );
 }

@@ -7,9 +7,16 @@ module.exports = {
       jsx: true, // Allows for the parsing of JSX
     },
   },
+  plugins: ['import', 'unused-imports'],
   settings: {
     react: {
       version: 'detect', // Tells eslint-plugin-react to automatically detect the version of React to use
+    },
+    'import/parsers': {
+      '@typescript-eslint/parser': ['.ts', '.tsx'],
+    },
+    'import/resolver': {
+      typescript: {},
     },
   },
   extends: [
@@ -19,7 +26,6 @@ module.exports = {
     'plugin:@typescript-eslint/recommended', // Uses the recommended rules from @typescript-eslint/eslint-plugin
     'plugin:prettier/recommended', // Enables eslint-plugin-prettier and eslint-config-prettier. This will display prettier errors as ESLint errors. Make sure this is always the last configuration in the extends array.
   ],
-  plugins: ['unused-imports'],
   rules: {
     'react/jsx-uses-react': 'warn',
     'react/jsx-uses-vars': 'warn',
@@ -33,4 +39,4 @@ module.exports = {
     // Place to specify ESLint rules. Can be used to overwrite rules specified from the extended configs
     // e.g. "@typescript-eslint/explicit-function-return-type": "off",
   },
-}
+};

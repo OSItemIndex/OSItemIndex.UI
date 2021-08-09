@@ -1,6 +1,6 @@
 import * as React from 'react';
 import App from './App';
-import ReactDOM from 'react-dom';
+import { render } from 'react-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { createTheme, ThemeProvider } from '@material-ui/core/styles';
 import '@fontsource/roboto/300.css';
@@ -14,9 +14,8 @@ const theme = createTheme({
   },
 });
 
-ReactDOM.render(
+render(
   <ThemeProvider theme={theme}>
-    {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
     <CssBaseline />
     <App />
   </ThemeProvider>,
